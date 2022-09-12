@@ -11,8 +11,9 @@ const ProductCard: FunctionComponent<Product> = (product) => {
                     className="h-full w-full object-cover object-center group-hover:opacity-75"
                 />
             </div>
-            <h3 className="mt-4 text-sm text-gray-700">{product.title}</h3>
-            <p className="mt-1 text-lg font-medium text-gray-900">{product.price}$</p>
+            <h3 className="mt-4 font-semibold">{product.title}</h3>
+            <p className='italic text-gray-600 text-sm'> {product.description}</p>
+            <p className="mt-1 font-medium text-gray-900">${product.price}</p>
         </a>
     )
 
