@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 
 
 const SignUp = function (): JSX.Element {
     return (
-        <>
-            <div className="text-center px-8 py-3 shadow-xl border rounded-md">
+        <div className="">
+            <div className="mx-auto md:w-1/2 text-center px-8 py-3 shadow-xl border rounded-md mt-10">
                 <h2 className="text-2xl font-semibold my-5">Sign up</h2>
                 <form>
                     <input className="block w-full mb-4" type='text' placeholder='Full Name' />
@@ -14,8 +15,8 @@ const SignUp = function (): JSX.Element {
                 </form>
                 <p className="my-3 text-gray-400">By signing up, you agree to the <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a></p>
             </div>
-            <p className="text-center mt-4 text-gray-500">Already have an account? <a href="" className="text-blue-500 underline">Log in</a></p>
-        </>
+            <p className="text-center mt-4 text-gray-500">Already have an account? <Link to='/signin' className="text-blue-500 underline">Log in</Link></p>
+        </div>
     )
 }
 
