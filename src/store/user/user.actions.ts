@@ -3,8 +3,13 @@ import IUser from "../../interfaces/user";
 import { delay } from "../../utils/utils";
 import userActionTypes from "./user.actionTypes";
 
-
+function tryToLogIn() {
+    return {
+        type: userActionTypes.TRY_TO_LOGIN
+    }
+}
 function loginSuccess(currentUser: IUser): IAction {
+    console.info(currentUser);
     return {
         type: userActionTypes.LOGIN_SUCCESS,
         payload: currentUser,
@@ -12,6 +17,7 @@ function loginSuccess(currentUser: IUser): IAction {
 }
 
 function loginFailure(error: string): IAction {
+    alert(error);
     return {
         type: userActionTypes.LOGIN_FAILURE,
         payload: error
@@ -19,20 +25,29 @@ function loginFailure(error: string): IAction {
 }
 
 const logIn = (email: string, password: string) => async (dispatch: Function) => {
+    dispatch(tryToLogIn());
     await delay(3000);
-    const data = localStorage.getItem('users');
-    const users: IUser[] = data ? JSON.parse(data) : [];
-    const filteredResults = users.filter((user: IUser) => user.email == email);
-    const user = filteredResults.length > 0 ? filteredResults[0] : undefined;
-    if (user) {
-        if (user.password == password)
-            dispatch(loginSuccess(user));
-        else
-            dispatch(loginFailure('Password is incorrect!'));
+    try {
+        const data = localStorage.getItem('users');
+        const users: IUser[] = data ? JSON.parse(data) : [];
+        const filteredResults = users.filter((user: IUser) => user.email == email);
+        const user = filteredResults.length > 0 ? filteredResults[0] : undefined;
+        if (user) {
+            if (user.password == password){
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                dispatch(loginSuccess(user));
+            }
+            else
+                dispatch(loginFailure('Incorrect password!'));
+        }
+        else {
+            dispatch(loginFailure('There is no such user'))
+        }
     }
-    else {
-        dispatch(loginFailure('There is no such user'))
+    catch (error) {
+        dispatch(loginFailure('something went wrong, try again later!'));
     }
+
 }
 
 function registerSucces(): IAction {
@@ -48,8 +63,8 @@ function registerFailure(error: string): IAction {
         payload: error
     }
 }
-function tryToRegister(){
-    return{
+function tryToRegister() {
+    return {
         type: userActionTypes.TRY_TO_REGISTER
     }
 }
@@ -63,8 +78,8 @@ const register = (userData: IUser) => async (dispatch: Function) => {
         users.push(userData);
         localStorage.setItem('users', JSON.stringify(users));
         dispatch(registerSucces())
-    } 
-    catch(error){
+    }
+    catch (error) {
         dispatch(registerFailure('Error happened!! try again later'));
     }
 }
