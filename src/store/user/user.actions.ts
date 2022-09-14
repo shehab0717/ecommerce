@@ -48,9 +48,14 @@ function registerFailure(error: string): IAction {
         payload: error
     }
 }
+function tryToRegister(){
+    return{
+        type: userActionTypes.TRY_TO_REGISTER
+    }
+}
 const register = (userData: IUser) => async (dispatch: Function) => {
     //validate user data then..
-
+    dispatch(tryToRegister());
     try {
         await delay(3000);
         const data = localStorage.getItem('users');
