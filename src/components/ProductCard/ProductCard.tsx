@@ -5,7 +5,7 @@ import IProduct from "../../interfaces/product";
 
 const ProductCard: FunctionComponent<IProduct> = (product) => {
     return (
-        <Link key={product.id} to="/product-details/1" className="group">
+        <Link key={product.id} to={`/product-details/${product.id}`} className="group">
             <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                 <img
                     src={product.image}
