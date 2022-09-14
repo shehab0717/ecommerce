@@ -1,8 +1,8 @@
 import ProductCard from "../ProductCard/ProductCard";
-import Product from "../../models/product";
+import IProduct from "../../interfaces/product";
 
 interface ProductsProps {
-    data: Array<Product>
+    data: Array<IProduct>
 }
 const Products = function (props: ProductsProps): JSX.Element {
     return (

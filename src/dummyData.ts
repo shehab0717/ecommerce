@@ -1,6 +1,6 @@
-import Product from "./models/product";
+import IProduct from "./interfaces/product";
 
-const products: Array<Product> = [
+const products: Array<IProduct> = [
     {
         id: '323knflk391',
         title: 'sneakers',
