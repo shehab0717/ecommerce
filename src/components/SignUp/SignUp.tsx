@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
 import { register } from "../../store/user/user.actions";
 import { RootState } from "../../store/store";
+import ErrorsArea from "../ErrorsArea/ErrorsArea";
 
 
 
@@ -16,21 +17,30 @@ const SignUp = function (): JSX.Element {
     const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const tryToRegister = useSelector(({ userReducer }: RootState) => userReducer.tryToRegister);
+    const registerErros = useSelector(({ userReducer }: RootState) => userReducer.registerErrors ?? []);
+    const currentUser = useSelector(({ userReducer }: RootState) => userReducer.currentUser());
 
+
+    const navigate = useNavigate();
     const { v4: uuidv4 } = require('uuid');
+
+    useEffect(()=>{
+        if(currentUser)
+            navigate('/');
+    },[currentUser])
 
     function onRegister(event: any) {
         event.preventDefault();
         const id = uuidv4();
         console.log(id);
-        dispatch(register({ id: id, name, email, password }))
-
+        dispatch(register({ id: id, name, email, password, passwordConfirm }))
     }
 
     return (
         <div className="">
             <div className="mx-auto md:w-1/2 text-center px-8 py-3 shadow-xl border rounded-md mt-10">
                 <h2 className="text-2xl font-semibold my-5">Sign up</h2>
+                <ErrorsArea errors={registerErros} className='my-4' />
                 <form>
                     <input className="block w-full mb-4" type='text' placeholder='Full Name' value={name} onChange={(event) => { setName(event.target.value) }} />
                     <input className="block w-full mb-4" type='text' placeholder='Email' value={email} onChange={(event) => { setEmail(event.target.value) }} />
@@ -41,7 +51,7 @@ const SignUp = function (): JSX.Element {
                         onClick={onRegister}
                         disabled={tryToRegister}
                     >
-                        {tryToRegister?'loading...':'Create Account'}</button>
+                        {tryToRegister ? 'loading...' : 'Create Account'}</button>
                 </form>
                 <p className="my-3 text-gray-400">By signing up, you agree to the <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a></p>
             </div>
