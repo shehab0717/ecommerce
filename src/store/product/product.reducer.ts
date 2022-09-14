@@ -38,8 +38,32 @@ function productReducer (state = initialState, action: IAction): stateType {
                 fetchingAll: false,
                 error: true,
                 errorMessage: action.payload,
-            }
+            };
 
+        case productActionTypes.FETCH_ONE_STARTS:
+            return{
+                ...state,
+                fetchingOne: true,
+                error: false,
+                errorMessage: '',
+            };
+
+        case productActionTypes.FETCH_ONE_SUCCESS:
+            return{
+                ...state,
+                fetchingOne: false,
+                productDetails: action.payload,
+                error: false,
+                errorMessage: '',
+            };
+            
+        case productActionTypes.FETCH_ONE_FAILURE:
+            return{
+                ...state,
+                fetchingOne: false,
+                error: true,
+                errorMessage: action.payload
+            }
 
         default:
             return state;
