@@ -7,7 +7,7 @@ import { RootState, useAppDispatch } from '../../store/store';
 import { useEffect } from 'react';
 
 interface ProductsProps {
-    data: Array<IProduct>
+    data?: Array<IProduct>
 }
 const Products = function (props: ProductsProps): JSX.Element {
 

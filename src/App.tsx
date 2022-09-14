@@ -1,23 +1,26 @@
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from "./components/Navbar/Navbar"
+import Products from "./components/Products/Products";
+import { Link, Outlet, Routes, useNavigate, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
 import ProductDetails from './components/ProductDetails/ProductDetails';
-import Products from './components/Products/Products';
-import SignUp from './components/SignUp/SignUp';
-import { products as productsData } from './dummyData';
-import Layout from './components/Layout';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './components/Home/Home';
-import SignIn from './components/SignIn/SignIn';
 function App() {
+  const currentUser = useSelector(({ userReducer }: RootState) => userReducer.currentUser());
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!currentUser)
+      navigate('/signup');
+  }, [currentUser])
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/signin' element={<SignIn />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    <>
+      <Navbar />
+      <div className="container mx-auto">
+        <Outlet />
+      </div>
+    </>
+  )
 }
 
 export default App;
