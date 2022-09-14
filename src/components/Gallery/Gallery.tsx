@@ -8,7 +8,7 @@ const Gallery = ({ images, className }: propsType): JSX.Element => {
     const rand = Math.ceil(Math.random() * 13342) % 999;
 
     return (
-        <div className="flex flex-col h-80 ">
+        <div className={"flex flex-col h-80 " + className}>
             <img className="object-contain mx-auto rounded-xl" src={images[0]} />
 
             <div className="columns-4 mt-5">
