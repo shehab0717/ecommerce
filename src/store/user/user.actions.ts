@@ -1,5 +1,6 @@
 import IAction from "../../interfaces/action";
 import IUser from "../../interfaces/user";
+import { delay } from "../../utils/utils";
 import userActionTypes from "./user.actionTypes";
 
 
@@ -17,7 +18,8 @@ function loginFailure(error: string): IAction {
     }
 }
 
-const logIn = (email: string, password: string) => (dispatch: Function) => {
+const logIn = (email: string, password: string) => async (dispatch: Function) => {
+    await delay(3000);
     const data = localStorage.getItem('users');
     const users: IUser[] = data ? JSON.parse(data) : [];
     const filteredResults = users.filter((user: IUser) => user.email == email);
@@ -34,6 +36,7 @@ const logIn = (email: string, password: string) => (dispatch: Function) => {
 }
 
 function registerSucces(): IAction {
+    console.log('registered successfully...');
     return {
         type: userActionTypes.REGISTER_SUCCESS,
     }
@@ -45,10 +48,11 @@ function registerFailure(error: string): IAction {
         payload: error
     }
 }
-const register = (userData: IUser) => (dispatch: Function) => {
+const register = (userData: IUser) => async (dispatch: Function) => {
     //validate user data then..
 
     try {
+        await delay(3000);
         const data = localStorage.getItem('users');
         const users: IUser[] = data ? JSON.parse(data) : [];
         users.push(userData);
