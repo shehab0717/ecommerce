@@ -1,21 +1,29 @@
-import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import { useAppDispatch } from "../../store/store";
 import { logIn } from "../../store/user/user.actions";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import ErrorsArea from "../ErrorsArea/ErrorsArea";
 
 const SignIn = (): JSX.Element => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
-    const isLoggedIn = useSelector(({ userReducer }: RootState) => userReducer.isLoggedIn);
+    const currentUser = useSelector(({ userReducer }: RootState) => userReducer.currentUser());
     const tryToLogin = useSelector(({ userReducer }: RootState) => userReducer.tryToLogin);
+    const loginErrors = useSelector(({ userReducer }: RootState) => userReducer.loginErrors);
+
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
 
+    useEffect(() => {
+        if (currentUser)
+            navigate('/');
+    }, [currentUser])
 
     function onLogIn(event: any) {
         //validate data
@@ -25,6 +33,7 @@ const SignIn = (): JSX.Element => {
     return (
         <div className="p-4 md:w-1/2 mx-auto mt-10">
             <h2 className="text-2xl font-bold my-6 text-center">Sign in to your account</h2>
+            <ErrorsArea errors={loginErrors ?? []} className='my-4' />
             <form>
                 <input className="w-full rounded-t-md rounded-b-none"
                     type='email'
@@ -52,7 +61,7 @@ const SignIn = (): JSX.Element => {
                     className="w-full bg-violet-600 text-white py-2 my-2 hover:bg-violet-500"
                     onClick={onLogIn}
                     disabled={tryToLogin}
-                >{tryToLogin? 'Loading...':'Sign in'}</button>
+                >{tryToLogin ? 'Loading...' : 'Sign in'}</button>
                 <Link to='/signup' className="block text-center text-blue-500 underline">Register</Link>
 
             </form>

@@ -17,7 +17,6 @@ function loginSuccess(currentUser: IUser): IAction {
 }
 
 function loginFailure(erros: string[]): IAction {
-    alert(erros);
     return {
         type: userActionTypes.LOGIN_FAILURE,
         payload: erros
@@ -26,6 +25,14 @@ function loginFailure(erros: string[]): IAction {
 
 const logIn = (email: string, password: string) => async (dispatch: Function) => {
     dispatch(tryToLogIn());
+    if (!validateEmail(email)) {
+        dispatch(loginFailure(['Email is not valid']));
+        return;
+    }
+    if (password.length < 6) {
+        dispatch(loginFailure(['Incorrect password']));
+        return;
+    }
     await delay(3000);
     try {
         const data = localStorage.getItem('users');
@@ -70,7 +77,7 @@ function tryToRegister() {
     }
 }
 
-function validateUser(userData: IUser) {
+function validateRegisterData(userData: IUser) {
     const errors: Array<string> = [];
     if (!validateEmail(userData.email))
         errors.push('Email is not valid');
@@ -81,9 +88,10 @@ function validateUser(userData: IUser) {
     return errors;
 
 }
+
 const register = (userData: IUser) => async (dispatch: Function) => {
     //validate user data then..
-    const errors = validateUser(userData);
+    const errors = validateRegisterData(userData);
     if (errors.length > 0) {
         dispatch(registerFailure(errors));
         return;
