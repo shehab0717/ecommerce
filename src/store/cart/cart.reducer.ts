@@ -12,6 +12,7 @@ type stateType = {
 const initalState: stateType = {
     addingToCart: false,
     error: false,
+    items: [],
 
 }
 const cartReducer = (state = initalState, action: IAction):stateType => {
