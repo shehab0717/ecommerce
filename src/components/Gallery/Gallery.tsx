@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 type propsType = {
@@ -12,6 +12,10 @@ const Gallery = ({ images, className }: propsType): JSX.Element => {
     for (let i = images.length; i < 4; i++) {
         images.push(`https://picsum.photos/200/200?random=${rand + i}`);
     }
+
+    useEffect(()=>{
+        setSelectedImage(images[0]);
+    }, [images])
 
     function isSelected(image: string) { return image === selectedImage };
     return (
