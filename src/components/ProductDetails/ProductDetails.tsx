@@ -25,6 +25,9 @@ const ProductDetails = (): JSX.Element => {
             dispatch(fetchOneProduct(parseInt(id)))
     }, [id])
 
+    function onCountChange(count: number){
+        console.log(count);
+    }
     console.log(product);
     return (
         isFetching
@@ -43,9 +46,9 @@ const ProductDetails = (): JSX.Element => {
                         </p>
                         <Price className="my-8" price={product.price} discount={10} />
                         <div className="flex flex-row justify-between mt-8">
-                            <CountHandler />
+                            <CountHandler onChange={onCountChange} />
                             <IconButton onClick={() => { }} iconSrc={cartIcon} text='Add to cart'
-                                className="py-3 bg-orange text-white font-medium border-none grow mx-4 shadow rounded-xl"
+                                className="hover:opacity-80 py-3 bg-orange text-white font-medium border-none grow mx-4 shadow rounded-xl"
                             />
                         </div>
                     </div>
