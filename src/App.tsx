@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import ProductDetails from './components/ProductDetails/ProductDetails';
+import Cart from './components/Cart/Cart';
 function App() {
   const currentUser = useSelector(({ userReducer }: RootState) => userReducer.currentUser());
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function App() {
     <>
       <Navbar />
       <div className="container mx-auto">
+        <Cart />
         <Outlet />
       </div>
     </>
