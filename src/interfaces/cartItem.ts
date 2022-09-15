@@ -3,7 +3,7 @@ import IProduct from "./product";
 
 interface ICartItem{
     count: number;
-    product?: IProduct;
+    product: IProduct;
 }
 
 export default ICartItem;
