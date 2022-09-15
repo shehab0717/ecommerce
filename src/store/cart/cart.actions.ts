@@ -24,9 +24,23 @@ const addTocart = (item: ICartItem) => async (dispatch: Function) => {
         dispatch(createAction(cartActionTypes.ADD_TO_CART_SUCCESS, items));
     }
     catch (error) {
-        console.log(error);
-        dispatch(createAction(cartActionTypes.ADD_TO_CART_FAILURE));
+        dispatch(createAction(cartActionTypes.ADD_TO_CART_FAILURE, error));
     }
 }
 
-export { addTocart }
+const getCartItems = () => async (dispatch: Function) => {
+    dispatch(createAction(cartActionTypes.FETCH_ITEMS_START));
+    try {
+        await delay(3000);
+        const data = localStorage.getItem('cart');
+        const items = data ? JSON.parse(data) : [];
+        dispatch(createAction(cartActionTypes.FETCH_ITEMS_SUCCESS, items));
+    }
+    catch (error) {
+        dispatch(cartActionTypes.FETCH_ITEMS_FAILURE, error)
+    }
+
+}
+
+
+export { addTocart, getCartItems }
