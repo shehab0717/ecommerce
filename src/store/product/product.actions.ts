@@ -2,6 +2,7 @@ import IAction from "../../interfaces/action";
 import IProduct from "../../interfaces/product";
 import productActionTypes from "./product.actionTypes";
 import * as services from "./product.services";
+import {createAction} from '../../utils/utils';
 
 
 function fetchAllProductsStart(): IAction {
@@ -36,12 +37,7 @@ const fetchAllProducts = () => async (dispatch: Function) => {
     }
 }
 
-function createAction(type: string, payload?:any){
-    return{
-        type,
-        payload
-    };
-}
+
 const fetchOneProduct = (productId: number) => async (dispatch: Function) => {
     dispatch(createAction(productActionTypes.FETCH_ALL_STARTS));
     try{
