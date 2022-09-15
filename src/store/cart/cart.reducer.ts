@@ -1,10 +1,10 @@
 import IAction from "../../interfaces/action";
-import cartItem from "../../interfaces/cartItem";
+import ICartItem from "../../interfaces/cartItem";
 import cartActionTypes from "./cart.actionTypes";
 
 type stateType = {
     addingToCart: boolean,
-    items?: cartItem[],
+    items?: ICartItem[],
     error: boolean,
     errorMessage?: string,
 }
@@ -23,6 +23,7 @@ const cartReducer = (state = initalState, action: IAction):stateType => {
             }
 
         case cartActionTypes.ADD_TO_CART_SUCCESS:
+            console.log(action.payload);
             return {
                 ...state,
                 addingToCart: false,

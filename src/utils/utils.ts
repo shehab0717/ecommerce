@@ -8,6 +8,7 @@ export function delay(ms: number) {
 
 
 export function createAction(type: string, payload?:any){
+    console.log(`${type}: is running...`);
     return{
         type,
         payload

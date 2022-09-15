@@ -9,6 +9,8 @@ import { RootState, useAppDispatch } from "../../store/store";
 import ReactLoading from 'react-loading';
 import { useEffect } from 'react';
 import { fetchOneProduct } from "../../store/product/product.actions";
+import * as actions from '../../store/cart/cart.actions';
+import ICartItem from "../../interfaces/cartItem";
 
 
 
@@ -17,6 +19,7 @@ const ProductDetails = (): JSX.Element => {
     const isFetching = useSelector(({ productReducer }: RootState) => productReducer.fetchingOne);
     const product = useSelector(({ productReducer }: RootState) => productReducer.productDetails);
     const dispatch = useAppDispatch();
+    let itemCount = 0;
 
     console.log('product id: ' + id);
 
@@ -25,10 +28,13 @@ const ProductDetails = (): JSX.Element => {
             dispatch(fetchOneProduct(parseInt(id)))
     }, [id])
 
-    function onCountChange(count: number){
-        console.log(count);
+    function onCountChange(count: number) {
+        itemCount = count;
     }
-    console.log(product);
+
+    function addToCart() {
+        dispatch(actions.addTocart({ count: itemCount > 0 ? itemCount : 1, product: product }))
+    }
     return (
         isFetching
             ? <ReactLoading color="#000" />
@@ -47,7 +53,7 @@ const ProductDetails = (): JSX.Element => {
                         <Price className="my-8" price={product.price} discount={10} />
                         <div className="flex flex-row justify-between mt-8">
                             <CountHandler onChange={onCountChange} />
-                            <IconButton onClick={() => { }} iconSrc={cartIcon} text='Add to cart'
+                            <IconButton onClick={addToCart} iconSrc={cartIcon} text='Add to cart'
                                 className="hover:opacity-80 py-3 bg-orange text-white font-medium border-none grow mx-4 shadow rounded-xl"
                             />
                         </div>
