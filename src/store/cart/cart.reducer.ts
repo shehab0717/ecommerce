@@ -3,16 +3,19 @@ import ICartItem from "../../interfaces/cartItem";
 import cartActionTypes from "./cart.actionTypes";
 
 type stateType = {
-    addingToCart: boolean,
     items: ICartItem[],
+    addingItem: boolean,
+    fetchingItems: boolean,
+    removingItem?: boolean,
     error: boolean,
-    errorMessage?: string,
-    fetching: boolean,
+    fetchingError?: boolean,
+    addingError?: string,
+    removingError?: string,
 }
 
 const initalState: stateType = {
-    fetching: false,
-    addingToCart: false,
+    fetchingItems: false,
+    addingItem: false,
     error: false,
     items: [],
 
@@ -22,14 +25,14 @@ const cartReducer = (state = initalState, action: IAction): stateType => {
         case cartActionTypes.ADD_TO_CART_START:
             return {
                 ...state,
-                addingToCart: true,
+                addingItem: true,
             };
 
         case cartActionTypes.ADD_TO_CART_SUCCESS:
             console.log(action.payload);
             return {
                 ...state,
-                addingToCart: false,
+                addingItem: false,
                 items: action.payload,
             };
 
@@ -37,21 +40,21 @@ const cartReducer = (state = initalState, action: IAction): stateType => {
             return {
                 ...state,
                 error: true,
-                errorMessage: action.payload
+                addingError: action.payload
             };
 
 
         case cartActionTypes.FETCH_ITEMS_START:
             return{
                 ...state,
-                fetching: true,
+                fetchingItems: true,
                 error: false,
             };
 
         case cartActionTypes.FETCH_ITEMS_SUCCESS:
             return{
                 ...state,
-                fetching: false,
+                fetchingItems: false,
                 items: action.payload
             };
 
@@ -59,7 +62,27 @@ const cartReducer = (state = initalState, action: IAction): stateType => {
             return{
                 ...state,
                 error: true,
-                errorMessage: action.payload,
+                addingError: action.payload,
+            };
+
+        case cartActionTypes.REMOVE_ITEM_START:
+            return{
+                ...state,
+                removingItem: true,
+            };
+
+        case cartActionTypes.REMOVE_ITEM_SUCCESS:
+            return{
+                ...state,
+                removingItem: false,
+                items: action.payload,
+            };
+
+        case cartActionTypes.REMOVE_ITEM_FAILURE:
+            return{
+                ...state,
+                error: true,
+                removingError: action.payload
             }
         default:
             return state;

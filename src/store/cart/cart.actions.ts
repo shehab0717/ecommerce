@@ -48,4 +48,22 @@ const getCartItems = () => async (dispatch: Function) => {
 }
 
 
-export { addTocart, getCartItems }
+const removeCartItem = (id: string) => async (dispatch: Function) => {
+    if (id) {
+        dispatch(createAction(cartActionTypes.REMOVE_ITEM_START));
+        try {
+            await delay(3000);
+            const data = localStorage.getItem('cart');
+            const items: ICartItem[] = data ? JSON.parse(data) : [];
+            const filteredItems = items.filter(i => i.product.id != id)
+            localStorage.setItem('cart', JSON.stringify(filteredItems));
+            dispatch(createAction(cartActionTypes.REMOVE_ITEM_SUCCESS, filteredItems));
+
+        }
+        catch (error) {
+            dispatch(createAction(cartActionTypes.REMOVE_ITEM_FAILURE, error));
+        }
+    }
+}
+
+export { addTocart, getCartItems, removeCartItem }
