@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <Navbar onCartClick={() => { setCartOpen(!cartOpen) }} />
-      <div className="container mx-auto">
+      <div className="container mx-auto my-10">
         <Cart clasName={`${cartOpen? '': 'invisible'}`} />
         <Outlet />
       </div>
