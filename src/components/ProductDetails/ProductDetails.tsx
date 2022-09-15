@@ -18,6 +18,8 @@ const ProductDetails = (): JSX.Element => {
     const { id } = useParams();
     const isFetching = useSelector(({ productReducer }: RootState) => productReducer.fetchingOne);
     const product = useSelector(({ productReducer }: RootState) => productReducer.productDetails);
+    const addingToCart = useSelector(({ cartReducer }: RootState) => cartReducer.addingItem);
+
     const dispatch = useAppDispatch();
     let itemCount = 0;
 
@@ -33,7 +35,7 @@ const ProductDetails = (): JSX.Element => {
     }
 
     function addToCart() {
-        if(product)
+        if (product)
             dispatch(actions.addTocart({ count: itemCount > 0 ? itemCount : 1, product: product }))
     }
     return (
@@ -52,11 +54,15 @@ const ProductDetails = (): JSX.Element => {
                             {product.description}
                         </p>
                         <Price className="my-8" price={product.price} discount={10} />
-                        <div className="flex flex-row justify-between mt-8">
+                        <div className="flex flex-row justify-between mt-8 items-center">
                             <CountHandler onChange={onCountChange} />
-                            <IconButton onClick={addToCart} iconSrc={cartIcon} text='Add to cart'
-                                className="hover:opacity-80 py-3 bg-orange text-white font-medium border-none grow mx-4 shadow rounded-xl"
-                            />
+                            {
+                                addingToCart
+                                    ? <ReactLoading className="mx-auto" width={30} height={30} color="#000" type="spin"/>
+                                    : <IconButton onClick={addToCart} iconSrc={cartIcon} text='Add to cart'
+                                        className="hover:opacity-80 py-3 bg-orange text-white font-medium border-none grow mx-4 shadow rounded-xl"
+                                    />
+                            }
                         </div>
                     </div>
                 </div>
