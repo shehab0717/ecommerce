@@ -9,9 +9,9 @@ type propsType = {
 }
 
 const CountHandler = ({className, onChange}: propsType): JSX.Element => {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
     function handleChange(increment: number) {
-        if (count + increment >= 0){
+        if (count + increment > 0){
             setCount(count + increment);
             onChange(count + increment);
         }
