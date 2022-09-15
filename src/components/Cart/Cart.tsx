@@ -6,7 +6,7 @@ import ReactLoading from 'react-loading';
 import { useEffect } from 'react';
 import { getCartItems } from "../../store/cart/cart.actions";
 
-const Cart = () => {
+const Cart = ({ clasName }: any) => {
 
     const items = useSelector(({ cartReducer }: RootState) => cartReducer.items ?? []);
     const isFetching = useSelector(({ cartReducer }: RootState) => cartReducer.fetching ?? []);
@@ -18,7 +18,7 @@ const Cart = () => {
 
 
     return (
-        <div className="absolute fixed top-20 right-20 w-80 shadow-lg shadow-gray-400 rounded-lg py-2 bg-white">
+        <div className={"absolute fixed top-20 right-20 w-80 shadow-lg shadow-gray-400 rounded-lg py-2 bg-white " + clasName}>
             <div>
                 <span className="block px-4 my-1 font-semibold">Cart</span>
                 <hr />
