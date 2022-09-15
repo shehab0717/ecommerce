@@ -33,7 +33,8 @@ const ProductDetails = (): JSX.Element => {
     }
 
     function addToCart() {
-        dispatch(actions.addTocart({ count: itemCount > 0 ? itemCount : 1, product: product }))
+        if(product)
+            dispatch(actions.addTocart({ count: itemCount > 0 ? itemCount : 1, product: product }))
     }
     return (
         isFetching
