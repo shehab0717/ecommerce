@@ -43,6 +43,7 @@ img.selected{
   box-sizing: border-box;
   border: 3px solid orange;
   position: relative;
+  opacity: 0.7;
 }
 
 img.selected::before{
