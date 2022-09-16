@@ -15,7 +15,7 @@ type propsType = {
 const Navbar = function ({ className = '', onAvatarClick = () => { }, onCartClick = () => { } }: propsType): JSX.Element {
 
 
-    const [openSidebar, setOpenSidebar] = useState(true);
+    const [openSidebar, setOpenSidebar] = useState(false);
 
     function closeSidebar(){
         setOpenSidebar(false);
@@ -24,13 +24,13 @@ const Navbar = function ({ className = '', onAvatarClick = () => { }, onCartClic
         <>
             <Sidebar isOpen={openSidebar} close={closeSidebar} />
             <div>
-                <div className={"container mx-auto " + className}>
-                    <div className="flex flex-row justify-between py-8">
+                <div className={"container mx-auto" + className}>
+                    <div className="flex flex-row justify-between py-8 md:mx-0 mx-3">
                         <div className="basis-8/12">
                             <span className='inline-block cursor-pointer lg:hidden' onClick={()=>setOpenSidebar(true)}>
                                 <img src={menuIcon} />
                             </span>
-                            <Link to="/products" className="font-bold text-3xl mx-5">sneakers</Link>
+                            <Link to="/products" className="text-xl font-bold md:text-3xl mx-5">sneakers</Link>
                             <ul className="text-gray-500 hidden lg:inline-block">
                                 <li key={1} className="inline mx-3 py-9 hover:border-b-2 hover:text-black border-orange"><Link to="/products">Collections</Link></li>
                                 <li key={2} className="inline mx-3 py-9 hover:border-b-2 hover:text-black border-orange"><Link to="/products">Men</Link></li>
