@@ -19,8 +19,8 @@ const Gallery = ({ images, className }: propsType): JSX.Element => {
 
     function isSelected(image: string) { return image === selectedImage };
     return (
-        <div className={"flex flex-col h-80 " + className}>
-            <img className="object-contain mx-auto rounded-xl" src={selectedImage} />
+        <div className={"flex flex-col md:h-80 " + className}>
+            <img className="object-contain mx-auto rounded-xl w-9/12 md:w-full" src={selectedImage} />
 
             <div className="columns-4 mt-5">
                 {

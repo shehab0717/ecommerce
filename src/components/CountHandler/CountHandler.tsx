@@ -17,7 +17,7 @@ const CountHandler = ({className, onChange}: propsType): JSX.Element => {
         }
     }
     return (
-        <div className={'bg-gray-100 inline-block rounded-xl' + className}>
+        <div className={'bg-gray-100 inline-block rounded-xl ' + className}>
             <span className='p-3 px-5 cursor-pointer inline-block' onClick={() => handleChange(-1)}>
                 <img className='inline' src={minusIcon} />
             </span>
